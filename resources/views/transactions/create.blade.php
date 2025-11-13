@@ -166,9 +166,13 @@
         const typeRadios = document.querySelectorAll('input[name="type"]');
         const categorySelect = document.getElementById('category_id');
         const categoryOptions = categorySelect.querySelectorAll('option');
+        const typeInput = document.getElementById('type-radio-expense'); // Default to expense radio
 
         function updateCategories() {
-            const selectedType = document.getElementById('type').value;
+            // Get selected type from the checked radio button
+            const selectedRadio = document.querySelector('input[name="type"]:checked');
+            const selectedType = selectedRadio ? selectedRadio.value : 'expense';
+
             categorySelect.value = '';
 
             categoryOptions.forEach(option => {
@@ -182,11 +186,16 @@
         }
 
         typeRadios.forEach(radio => {
-            radio.addEventListener('change', updateCategories);
+            radio.addEventListener('change', function() {
+                document.getElementById('type').value = this.value;
+                updateCategories();
+            });
         });
 
-        // Initial update
-        updateCategories();
+        // Initial update on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            updateCategories();
+        });
 
         // Function to handle type selection with visual feedback
         function selectType(type) {
@@ -219,7 +228,7 @@
         }
 
         // Set initial styling on page load
-        window.addEventListener('load', function() {
+        document.addEventListener('DOMContentLoaded', function() {
             const currentType = document.getElementById('type').value;
             if (currentType === 'income') {
                 selectType('income');

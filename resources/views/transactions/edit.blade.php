@@ -168,8 +168,8 @@
         const categoryOptions = categorySelect.querySelectorAll('option');
 
         function updateCategories() {
-            const selectedType = Array.from(typeRadios).find(r => r.checked).value;
-            const currentValue = categorySelect.value;
+            const selectedRadio = document.querySelector('input[name="type"]:checked');
+            const selectedType = selectedRadio ? selectedRadio.value : 'expense';
 
             categoryOptions.forEach(option => {
                 if (option.value === '') {
@@ -182,11 +182,15 @@
         }
 
         typeRadios.forEach(radio => {
-            radio.addEventListener('change', updateCategories);
+            radio.addEventListener('change', function() {
+                updateCategories();
+            });
         });
 
-        // Initial update
-        updateCategories();
+        // Initial update on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCategories();
+        });
 
         // Function to handle type selection with visual feedback
         function selectType(type) {

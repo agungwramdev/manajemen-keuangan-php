@@ -20,7 +20,10 @@ class TransactionController extends Controller
 
     public function create()
     {
-        $categories = Category::where('user_id', auth()->id())->get();
+        $categories = Category::where('user_id', auth()->id())
+            ->orderBy('type')
+            ->orderBy('name')
+            ->get();
         return view('transactions.create', compact('categories'));
     }
 
@@ -58,7 +61,10 @@ class TransactionController extends Controller
         if ($transaction->user_id !== auth()->id()) {
             abort(403, 'Unauthorized');
         }
-        $categories = Category::where('user_id', auth()->id())->get();
+        $categories = Category::where('user_id', auth()->id())
+            ->orderBy('type')
+            ->orderBy('name')
+            ->get();
         return view('transactions.edit', compact('transaction', 'categories'));
     }
 
