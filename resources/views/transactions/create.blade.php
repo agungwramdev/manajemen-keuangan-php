@@ -99,16 +99,17 @@
 
                 <!-- Amount -->
                 <div class="mb-6">
-                    <label for="amount" class="block text-sm font-semibold text-gray-700 mb-2">Amount *</label>
+                    <label for="amount" class="block text-sm font-semibold text-gray-700 mb-2">Jumlah (Rp) *</label>
                     <div class="relative">
-                        <span class="absolute left-4 top-2 text-gray-500 font-semibold">Rp</span>
-                        <input type="number" name="amount" id="amount"
-                               value="{{ old('amount') }}"
-                               step="0.01" min="0"
-                               placeholder="0.00"
-                               class="w-full pl-10 pr-4 py-2 border @error('amount') border-red-500 @else border-gray-300 @enderror rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        <span class="absolute left-4 top-3 text-gray-500 font-semibold text-lg">Rp</span>
+                        <input type="text" id="amountDisplay"
+                               placeholder="0"
+                               class="w-full pl-12 pr-4 py-2 border @error('amount') border-red-500 @else border-gray-300 @enderror rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent font-semibold text-lg"
                                required>
+                        <!-- Hidden input untuk menyimpan value raw -->
+                        <input type="hidden" name="amount" id="amount" value="{{ old('amount') }}">
                     </div>
+                    <p class="text-gray-500 text-xs mt-2">Format: Ketik angka (misal: 50000 untuk Rp 50.000)</p>
                     @error('amount')
                         <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
                     @enderror
@@ -225,6 +226,54 @@
             } else {
                 selectType('expense');
             }
+
+            // Initialize amount display jika ada old value
+            const amountInput = document.getElementById('amount');
+            const amountDisplay = document.getElementById('amountDisplay');
+            if (amountInput.value) {
+                amountDisplay.value = formatCurrency(amountInput.value);
+            }
+        });
+
+        // Currency Formatter
+        function formatCurrency(value) {
+            // Remove semua non-digit characters
+            const cleanValue = value.replace(/\D/g, '');
+            if (!cleanValue) return '';
+
+            // Format dengan separator titik per 3 digit dari belakang
+            return cleanValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+
+        // Handle input pada amount display
+        const amountDisplay = document.getElementById('amountDisplay');
+        const amountInput = document.getElementById('amount');
+
+        amountDisplay.addEventListener('input', function(e) {
+            // Get raw value (hanya angka)
+            const rawValue = e.target.value.replace(/\D/g, '');
+
+            // Update hidden input dengan value raw
+            amountInput.value = rawValue || '';
+
+            // Format dan display
+            e.target.value = formatCurrency(rawValue);
+        });
+
+        // Handle paste event untuk currency
+        amountDisplay.addEventListener('paste', function(e) {
+            e.preventDefault();
+            const pastedText = (e.clipboardData || window.clipboardData).getData('text');
+            const cleanValue = pastedText.replace(/\D/g, '');
+
+            amountInput.value = cleanValue || '';
+            amountDisplay.value = formatCurrency(cleanValue);
+        });
+
+        // Handle form submit - pastikan value sudah tersimpan
+        document.querySelector('form').addEventListener('submit', function() {
+            const rawValue = amountDisplay.value.replace(/\D/g, '');
+            amountInput.value = rawValue;
         });
     </script>
 @endsection

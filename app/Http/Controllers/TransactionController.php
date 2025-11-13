@@ -45,20 +45,29 @@ class TransactionController extends Controller
 
     public function show(Transaction $transaction)
     {
-        $this->authorize('view', $transaction);
+        // Check if user owns this transaction
+        if ($transaction->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized');
+        }
         return view('transactions.show', compact('transaction'));
     }
 
     public function edit(Transaction $transaction)
     {
-        $this->authorize('update', $transaction);
+        // Check if user owns this transaction
+        if ($transaction->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized');
+        }
         $categories = Category::where('user_id', auth()->id())->get();
         return view('transactions.edit', compact('transaction', 'categories'));
     }
 
     public function update(Request $request, Transaction $transaction)
     {
-        $this->authorize('update', $transaction);
+        // Check if user owns this transaction
+        if ($transaction->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized');
+        }
 
         $validated = $request->validate([
             'category_id' => 'required|exists:categories,id',
@@ -77,7 +86,10 @@ class TransactionController extends Controller
 
     public function destroy(Transaction $transaction)
     {
-        $this->authorize('delete', $transaction);
+        // Check if user owns this transaction
+        if ($transaction->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized');
+        }
 
         $transaction->delete();
 
