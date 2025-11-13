@@ -15,30 +15,36 @@
 
                 <!-- Type Selection -->
                 <div class="mb-6">
-                    <label class="block text-sm font-semibold text-gray-700 mb-3">Type *</label>
+                    <label class="block text-sm font-semibold text-gray-700 mb-3">Pilih Tipe Transaksi *</label>
                     <div class="grid grid-cols-2 gap-4">
-                        <label class="relative flex items-center p-4 border-2 rounded-lg cursor-pointer @error('type') border-red-500 @else border-gray-300 @enderror"
-                               id="type-income" onclick="document.getElementById('type').value = 'income'">
+                        <!-- Income Option -->
+                        <label id="income-card"
+                               class="relative flex flex-col items-center p-6 border-2 rounded-lg cursor-pointer transition-all duration-300 ease-in-out @error('type') border-red-500 @else border-gray-300 @enderror hover:border-green-400 hover:shadow-lg"
+                               onclick="selectType('income')">
                             <input type="radio" name="type" value="income" class="hidden" id="type-radio-income"
                                    @if(old('type') === 'income') checked @endif>
-                            <span class="flex-1">
-                                <span class="block text-lg font-bold text-green-600">
-                                    <i class="fas fa-arrow-up mr-2"></i>Income
-                                </span>
-                                <span class="text-sm text-gray-600">Money coming in</span>
-                            </span>
+
+                            <div class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mb-3">
+                                <i class="fas fa-arrow-up text-green-600 text-3xl"></i>
+                            </div>
+                            <span class="block text-lg font-bold text-gray-900 text-center">INCOME</span>
+                            <span class="text-sm text-gray-600 text-center mt-2">Uang Masuk</span>
+                            <span class="text-xs text-gray-500 text-center mt-1">Gaji, Bonus, Investasi</span>
                         </label>
 
-                        <label class="relative flex items-center p-4 border-2 rounded-lg cursor-pointer @error('type') border-red-500 @else border-gray-300 @enderror"
-                               id="type-expense" onclick="document.getElementById('type').value = 'expense'">
+                        <!-- Expense Option -->
+                        <label id="expense-card"
+                               class="relative flex flex-col items-center p-6 border-2 rounded-lg cursor-pointer transition-all duration-300 ease-in-out @error('type') border-red-500 @else border-gray-300 @enderror hover:border-red-400 hover:shadow-lg"
+                               onclick="selectType('expense')">
                             <input type="radio" name="type" value="expense" class="hidden" id="type-radio-expense"
                                    @if(old('type') === 'expense') checked @endif>
-                            <span class="flex-1">
-                                <span class="block text-lg font-bold text-red-600">
-                                    <i class="fas fa-arrow-down mr-2"></i>Expense
-                                </span>
-                                <span class="text-sm text-gray-600">Money going out</span>
-                            </span>
+
+                            <div class="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center mb-3">
+                                <i class="fas fa-arrow-down text-red-600 text-3xl"></i>
+                            </div>
+                            <span class="block text-lg font-bold text-gray-900 text-center">EXPENSE</span>
+                            <span class="text-sm text-gray-600 text-center mt-2">Uang Keluar</span>
+                            <span class="text-xs text-gray-500 text-center mt-1">Makanan, Transport, Belanja</span>
                         </label>
                     </div>
                     @error('type')
@@ -180,5 +186,45 @@
 
         // Initial update
         updateCategories();
+
+        // Function to handle type selection with visual feedback
+        function selectType(type) {
+            const incomeCard = document.getElementById('income-card');
+            const expenseCard = document.getElementById('expense-card');
+
+            document.getElementById('type').value = type;
+            document.getElementById('type-radio-' + type).checked = true;
+
+            if (type === 'income') {
+                // Style Income card as selected
+                incomeCard.classList.remove('border-gray-300', 'hover:border-green-400');
+                incomeCard.classList.add('border-green-500', 'bg-green-50', 'shadow-lg', 'ring-2', 'ring-green-200');
+
+                // Style Expense card as unselected
+                expenseCard.classList.remove('border-red-500', 'bg-red-50', 'shadow-lg', 'ring-2', 'ring-red-200');
+                expenseCard.classList.add('border-gray-300', 'hover:border-red-400');
+            } else {
+                // Style Expense card as selected
+                expenseCard.classList.remove('border-gray-300', 'hover:border-red-400');
+                expenseCard.classList.add('border-red-500', 'bg-red-50', 'shadow-lg', 'ring-2', 'ring-red-200');
+
+                // Style Income card as unselected
+                incomeCard.classList.remove('border-green-500', 'bg-green-50', 'shadow-lg', 'ring-2', 'ring-green-200');
+                incomeCard.classList.add('border-gray-300', 'hover:border-green-400');
+            }
+
+            // Update categories based on selected type
+            updateCategories();
+        }
+
+        // Set initial styling on page load
+        window.addEventListener('load', function() {
+            const currentType = document.getElementById('type').value;
+            if (currentType === 'income') {
+                selectType('income');
+            } else {
+                selectType('expense');
+            }
+        });
     </script>
 @endsection
