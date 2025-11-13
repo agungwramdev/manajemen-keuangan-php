@@ -54,48 +54,45 @@
                 <table class="w-full">
                     <thead class="bg-gray-50 border-b border-gray-200">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tanggal</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Deskripsi</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Kategori</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Jenis</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Jumlah</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Metode Pembayaran</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Aksi</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tanggal</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Deskripsi</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Kat</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Jenis</th>
+                            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Jumlah</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Metode</th>
+                            <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
                         @foreach($transactions as $transaction)
                             <tr class="hover:bg-gray-50 transition">
-                                <td class="px-6 py-4 text-sm text-gray-900 font-medium">
+                                <td class="px-4 py-3 text-sm text-gray-900 font-medium whitespace-nowrap">
                                     {{ $transaction->transaction_date->format('d M Y') }}
                                 </td>
-                                <td class="px-6 py-4 text-sm text-gray-900">
+                                <td class="px-4 py-3 text-sm text-gray-900 max-w-xs">
                                     <a href="{{ route('transactions.show', $transaction) }}"
-                                       class="text-blue-600 hover:underline font-semibold">
+                                       class="text-blue-600 hover:underline font-semibold truncate block">
                                         {{ $transaction->title }}
                                     </a>
-                                    @if($transaction->description)
-                                        <p class="text-gray-500 text-xs mt-1">{{ Str::limit($transaction->description, 50) }}</p>
-                                    @endif
                                 </td>
-                                <td class="px-6 py-4 text-sm">
-                                    <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold text-white"
+                                <td class="px-4 py-3 text-sm">
+                                    <span class="inline-block px-2 py-1 rounded text-xs font-semibold text-white whitespace-nowrap"
                                           style="background-color: {{ $transaction->category->color }}">
-                                        {{ $transaction->category->name }}
+                                        {{ Str::limit($transaction->category->name, 8) }}
                                     </span>
                                 </td>
-                                <td class="px-6 py-4 text-sm">
+                                <td class="px-4 py-3 text-sm whitespace-nowrap">
                                     @if($transaction->type === 'income')
-                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">
-                                            <i class="fas fa-arrow-up mr-1"></i>Pemasukan
+                                        <span class="inline-flex items-center px-2 py-1 rounded text-xs font-semibold bg-green-100 text-green-800">
+                                            <i class="fas fa-arrow-up text-xs"></i>
                                         </span>
                                     @else
-                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800">
-                                            <i class="fas fa-arrow-down mr-1"></i>Pengeluaran
+                                        <span class="inline-flex items-center px-2 py-1 rounded text-xs font-semibold bg-red-100 text-red-800">
+                                            <i class="fas fa-arrow-down text-xs"></i>
                                         </span>
                                     @endif
                                 </td>
-                                <td class="px-6 py-4 text-sm font-bold">
+                                <td class="px-4 py-3 text-sm font-bold text-right whitespace-nowrap">
                                     <span class="@if($transaction->type === 'income') text-green-600 @else text-red-600 @endif">
                                         @if($transaction->type === 'income')
                                             +Rp {{ number_format($transaction->amount, 0, ',', '.') }}
@@ -104,24 +101,28 @@
                                         @endif
                                     </span>
                                 </td>
-                                <td class="px-6 py-4 text-sm text-gray-600">
-                                    {{ $transaction->payment_method }}
+                                <td class="px-4 py-3 text-sm text-gray-600 whitespace-nowrap">
+                                    <span class="text-xs">{{ Str::limit($transaction->payment_method, 12) }}</span>
                                 </td>
-                                <td class="px-6 py-4 text-sm space-x-2">
-                                    <a href="{{ route('transactions.edit', $transaction) }}"
-                                       class="inline-flex items-center px-3 py-1 rounded bg-yellow-100 text-yellow-800 hover:bg-yellow-200 transition">
-                                        <i class="fas fa-edit mr-1"></i>Ubah
-                                    </a>
-                                    <form action="{{ route('transactions.destroy', $transaction) }}"
-                                          method="POST" class="inline"
-                                          onsubmit="return confirm('Apakah Anda yakin ingin menghapus transaksi ini?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                                class="inline-flex items-center px-3 py-1 rounded bg-red-100 text-red-800 hover:bg-red-200 transition">
-                                            <i class="fas fa-trash mr-1"></i>Hapus
-                                        </button>
-                                    </form>
+                                <td class="px-4 py-3 text-sm">
+                                    <div class="flex gap-1 justify-center">
+                                        <a href="{{ route('transactions.edit', $transaction) }}"
+                                           class="inline-flex items-center px-2 py-1 rounded text-xs font-semibold bg-yellow-100 text-yellow-800 hover:bg-yellow-200 transition"
+                                           title="Ubah">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <form action="{{ route('transactions.destroy', $transaction) }}"
+                                              method="POST" class="inline"
+                                              onsubmit="return confirm('Hapus transaksi ini?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                    class="inline-flex items-center px-2 py-1 rounded text-xs font-semibold bg-red-100 text-red-800 hover:bg-red-200 transition"
+                                                    title="Hapus">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
