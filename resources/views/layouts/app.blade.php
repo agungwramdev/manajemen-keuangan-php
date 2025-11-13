@@ -47,10 +47,10 @@
                         <i class="fas fa-chart-line mr-2"></i>Dashboard
                     </a>
                     <a href="{{ route('transactions.index') }}" class="text-white hover:bg-white hover:bg-opacity-20 px-3 py-2 rounded-md text-sm font-medium">
-                        <i class="fas fa-list mr-2"></i>Transactions
+                        <i class="fas fa-list mr-2"></i>Transaksi
                     </a>
                     <a href="{{ route('transactions.create') }}" class="text-white hover:bg-white hover:bg-opacity-20 px-3 py-2 rounded-md text-sm font-medium">
-                        <i class="fas fa-plus mr-2"></i>New
+                        <i class="fas fa-plus mr-2"></i>Baru
                     </a>
 
                     <!-- User Dropdown -->
@@ -60,7 +60,7 @@
                         </button>
                         <div class="absolute right-0 w-48 bg-white rounded-lg shadow-xl hidden group-hover:block">
                             <a href="/" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                <i class="fas fa-sign-out mr-2"></i>Logout
+                                <i class="fas fa-sign-out mr-2"></i>Keluar
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
                                 @csrf
@@ -104,24 +104,24 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div>
-                    <h3 class="text-lg font-bold mb-4">Keuangan App</h3>
-                    <p class="text-gray-400">Manage your finances efficiently and effectively.</p>
+                    <h3 class="text-lg font-bold mb-4">Aplikasi Keuangan</h3>
+                    <p class="text-gray-400">Kelola keuangan Anda secara efisien dan efektif.</p>
                 </div>
                 <div>
-                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <h3 class="text-lg font-bold mb-4">Tautan Cepat</h3>
                     <ul class="space-y-2 text-gray-400">
                         <li><a href="{{ route('dashboard') }}" class="hover:text-white">Dashboard</a></li>
-                        <li><a href="{{ route('transactions.index') }}" class="hover:text-white">Transactions</a></li>
+                        <li><a href="{{ route('transactions.index') }}" class="hover:text-white">Transaksi</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h3 class="text-lg font-bold mb-4">Support</h3>
+                    <h3 class="text-lg font-bold mb-4">Dukungan</h3>
                     <p class="text-gray-400">Email: support@keuangan.local</p>
                 </div>
             </div>
             <hr class="border-gray-700 my-8">
             <div class="text-center text-gray-400">
-                <p>&copy; 2025 Keuangan App. All rights reserved.</p>
+                <p>&copy; 2025 Aplikasi Keuangan. Semua hak dilindungi undang-undang.</p>
             </div>
         </div>
     </footer>
