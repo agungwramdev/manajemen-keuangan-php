@@ -58,7 +58,10 @@
                         <button class="text-white hover:bg-white hover:bg-opacity-20 px-3 py-2 rounded-md text-sm font-medium flex items-center">
                             <i class="fas fa-user mr-2"></i>{{ Auth::user()->name }}
                         </button>
-                        <div class="absolute right-0 w-48 bg-white rounded-lg shadow-xl hidden group-hover:block">
+                        <div class="absolute right-0 w-48 bg-white rounded-lg shadow-xl hidden group-hover:block z-50">
+                            <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-gray-800 hover:bg-gray-100 border-b border-gray-200">
+                                <i class="fas fa-cog mr-2"></i>Pengaturan Profil
+                            </a>
                             <a href="/" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <i class="fas fa-sign-out mr-2"></i>Keluar
                             </a>
