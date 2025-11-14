@@ -91,15 +91,6 @@
                         <a href="{{ route('password.request') }}" class="text-blue-600 hover:underline">Forgot password?</a>
                     </p>
                 </div>
-
-                <!-- Demo Credentials -->
-                <div class="mt-6 pt-6 border-t border-gray-200">
-                    <p class="text-xs text-gray-600 mb-2 font-semibold">Akun Demo:</p>
-                    <p class="text-xs text-gray-600">
-                        <strong>Username/Email:</strong> john atau john@example.com<br>
-                        <strong>Password:</strong> password
-                    </p>
-                </div>
             </div>
         </div>
     </div>
