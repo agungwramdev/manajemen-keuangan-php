@@ -42,15 +42,15 @@
                 <form action="{{ route('login') }}" method="POST">
                     @csrf
 
-                    <!-- Email -->
+                    <!-- Login (Username or Email) -->
                     <div class="mb-4">
-                        <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
-                        <input type="email" name="email" id="email"
-                               value="{{ old('email') }}"
-                               placeholder="john@example.com"
-                               class="w-full px-4 py-2 border @error('email') border-red-500 @else border-gray-300 @enderror rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        <label for="login" class="block text-sm font-semibold text-gray-700 mb-2">Username atau Email</label>
+                        <input type="text" name="login" id="login"
+                               value="{{ old('login') }}"
+                               placeholder="john atau john@example.com"
+                               class="w-full px-4 py-2 border @error('login') border-red-500 @else border-gray-300 @enderror rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                required autofocus>
-                        @error('email')
+                        @error('login')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>
@@ -94,9 +94,9 @@
 
                 <!-- Demo Credentials -->
                 <div class="mt-6 pt-6 border-t border-gray-200">
-                    <p class="text-xs text-gray-600 mb-2 font-semibold">Demo Account:</p>
+                    <p class="text-xs text-gray-600 mb-2 font-semibold">Akun Demo:</p>
                     <p class="text-xs text-gray-600">
-                        <strong>Email:</strong> john@example.com<br>
+                        <strong>Username/Email:</strong> john atau john@example.com<br>
                         <strong>Password:</strong> password
                     </p>
                 </div>
