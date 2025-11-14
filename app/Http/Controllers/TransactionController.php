@@ -10,9 +10,29 @@ class TransactionController extends Controller
 {
     public function index()
     {
-        $transactions = Transaction::where('user_id', auth()->id())
-            ->with('category')
-            ->orderBy('transaction_date', 'desc')
+        $query = Transaction::where('user_id', auth()->id())
+            ->with('category');
+
+        // Filter by type
+        if (request('type')) {
+            $query->where('type', request('type'));
+        }
+
+        // Filter by search (title)
+        if (request('search')) {
+            $query->where('title', 'like', '%' . request('search') . '%');
+        }
+
+        // Filter by date range
+        if (request('from')) {
+            $query->whereDate('transaction_date', '>=', request('from'));
+        }
+
+        if (request('to')) {
+            $query->whereDate('transaction_date', '<=', request('to'));
+        }
+
+        $transactions = $query->orderBy('transaction_date', 'desc')
             ->paginate(15);
 
         return view('transactions.index', compact('transactions'));

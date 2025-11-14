@@ -17,10 +17,10 @@
 
     <!-- Filter Section -->
     <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-        <form method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <form method="GET" id="filterForm" class="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Jenis</label>
-                <select name="type" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                <select name="type" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent filter-input">
                     <option value="">Semua Jenis</option>
                     <option value="income" @selected(request('type') === 'income')>Pemasukan</option>
                     <option value="expense" @selected(request('type') === 'expense')>Pengeluaran</option>
@@ -30,22 +30,40 @@
                 <label class="block text-sm font-medium text-gray-700 mb-2">Cari</label>
                 <input type="text" name="search" placeholder="Cari judul..."
                        value="{{ request('search') }}"
-                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent filter-input">
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Mulai</label>
                 <input type="date" name="from"
                        value="{{ request('from') }}"
-                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent filter-input">
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Akhir</label>
                 <input type="date" name="to"
                        value="{{ request('to') }}"
-                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent filter-input">
+            </div>
+            <div class="flex items-end gap-2">
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition">
+                    <i class="fas fa-search mr-1"></i>Cari
+                </button>
+                <a href="{{ route('transactions.index') }}" class="w-full bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg transition text-center">
+                    <i class="fas fa-redo mr-1"></i>Reset
+                </a>
             </div>
         </form>
     </div>
+
+    <script>
+        // Auto-submit form when filters change
+        const filterInputs = document.querySelectorAll('.filter-input');
+        filterInputs.forEach(input => {
+            input.addEventListener('change', function() {
+                document.getElementById('filterForm').submit();
+            });
+        });
+    </script>
 
     <!-- Transactions Table -->
     <div class="bg-white rounded-lg shadow-md overflow-hidden">
