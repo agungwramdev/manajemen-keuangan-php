@@ -63,7 +63,7 @@
                                 <i class="fas fa-cog mr-2"></i>Pengaturan Profil
                             </a>
                             <a href="/" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                <i class="fas fa-sign-out mr-2"></i>Keluar
+                                <i class="fas fa-sign-out mr-2"></i>Log Out
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
                                 @csrf
