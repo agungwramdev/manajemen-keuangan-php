@@ -44,10 +44,7 @@
                        value="{{ request('to') }}"
                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent filter-input">
             </div>
-            <div class="flex items-end gap-2">
-                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition">
-                    <i class="fas fa-search mr-1"></i>Cari
-                </button>
+            <div class="flex items-end">
                 <a href="{{ route('transactions.index') }}" class="w-full bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg transition text-center">
                     <i class="fas fa-redo mr-1"></i>Reset
                 </a>
