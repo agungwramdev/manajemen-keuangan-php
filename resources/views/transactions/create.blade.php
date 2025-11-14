@@ -75,7 +75,7 @@
 
                 <!-- Title -->
                 <div class="mb-6">
-                    <label for="title" class="block text-sm font-semibold text-gray-700 mb-2">Judul *</label>
+                    <label for="title" class="block text-sm font-semibold text-gray-700 mb-2">Judul 1 *</label>
                     <input type="text" name="title" id="title"
                            value="{{ old('title') }}"
                            placeholder="Contoh: Gaji Bulanan"
