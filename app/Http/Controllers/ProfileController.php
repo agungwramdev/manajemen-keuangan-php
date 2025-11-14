@@ -17,6 +17,7 @@ class ProfileController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'username' => 'required|string|min:3|max:20|unique:users,username,' . auth()->id() . '|alpha_dash',
             'email' => 'required|email|unique:users,email,' . auth()->id(),
         ]);
 

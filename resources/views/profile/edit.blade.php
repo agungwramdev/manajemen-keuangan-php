@@ -31,6 +31,20 @@
                     @enderror
                 </div>
 
+                <!-- Username -->
+                <div class="mb-6">
+                    <label for="username" class="block text-sm font-semibold text-gray-700 mb-2">Username *</label>
+                    <input type="text" name="username" id="username"
+                           value="{{ old('username', auth()->user()->username) }}"
+                           placeholder="Masukkan username Anda"
+                           class="w-full px-4 py-2 border @error('username') border-red-500 @else border-gray-300 @enderror rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                           required>
+                    @error('username')
+                        <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                    @enderror
+                    <p class="text-gray-500 text-xs mt-2">3-20 karakter, hanya huruf, angka, underscore dan dash</p>
+                </div>
+
                 <!-- Email -->
                 <div class="mb-6">
                     <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email *</label>
