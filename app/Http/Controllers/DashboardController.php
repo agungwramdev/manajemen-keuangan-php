@@ -11,18 +11,13 @@ class DashboardController extends Controller
     {
         $userId = auth()->id();
 
-        // Get current month data
-        $currentMonth = now()->startOfMonth();
-        $currentMonthEnd = now()->endOfMonth();
-
+        // Get all transactions (not limited to current month)
         $totalIncome = Transaction::where('user_id', $userId)
             ->where('type', 'income')
-            ->whereBetween('transaction_date', [$currentMonth, $currentMonthEnd])
             ->sum('amount');
 
         $totalExpense = Transaction::where('user_id', $userId)
             ->where('type', 'expense')
-            ->whereBetween('transaction_date', [$currentMonth, $currentMonthEnd])
             ->sum('amount');
 
         $balance = $totalIncome - $totalExpense;
@@ -37,7 +32,6 @@ class DashboardController extends Controller
         // Expense by category
         $expenseByCategory = Transaction::where('user_id', $userId)
             ->where('type', 'expense')
-            ->whereBetween('transaction_date', [$currentMonth, $currentMonthEnd])
             ->with('category')
             ->get()
             ->groupBy('category.name')
@@ -48,7 +42,6 @@ class DashboardController extends Controller
         // Income by category
         $incomeByCategory = Transaction::where('user_id', $userId)
             ->where('type', 'income')
-            ->whereBetween('transaction_date', [$currentMonth, $currentMonthEnd])
             ->with('category')
             ->get()
             ->groupBy('category.name')

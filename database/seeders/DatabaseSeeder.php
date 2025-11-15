@@ -19,11 +19,15 @@ class DatabaseSeeder extends Seeder
 
         $user = User::factory()->create([
             'name' => 'John Doe',
+            'username' => 'john',
             'email' => 'john@example.com',
             'password' => bcrypt('password'),
         ]);
 
         // Run category seeder
         $this->call(CategorySeeder::class);
+
+        // Run transaction seeder
+        $this->call(TransactionSeeder::class);
     }
 }
