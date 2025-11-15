@@ -47,7 +47,7 @@
                         <label for="login" class="block text-sm font-semibold text-gray-700 mb-2">Username atau Email</label>
                         <input type="text" name="login" id="login"
                                value="{{ old('login') }}"
-                               placeholder="john atau john@example.com"
+                               placeholder="user atau user@email.com"
                                class="w-full px-4 py-2 border @error('login') border-red-500 @else border-gray-300 @enderror rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                required autofocus>
                         @error('login')
